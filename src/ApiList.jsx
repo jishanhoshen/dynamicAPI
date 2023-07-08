@@ -27,9 +27,14 @@ export default function ApiList() {
     if (apiList != '') {
         const list = apiList.map(item => <li key={item.id}><a href={item.url}>{item.url}</a></li>)
         return (
-            <ul>
-                {list}
-            </ul>
+            <>
+            <h2>Api List</h2>
+            <a href="/add">Add New API</a>
+                <h2>Api List</h2>
+                <ul>
+                    {list}
+                </ul>
+            </>
         )
     }
 

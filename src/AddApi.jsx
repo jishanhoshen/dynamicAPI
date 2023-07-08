@@ -21,7 +21,7 @@ function AddApi() {
 
   async function addNewUrl(data) {
     console.log(data);
-    const res = await axios.post("https://api.ongsho.com/api/testapi/"+data.url, data).then(function (res) {
+    const res = await axios.post("https://api.ongsho.com/api/testapi/" + data.url, data).then(function (res) {
       console.log(res);
     })
       .catch(function (error) {
@@ -37,6 +37,8 @@ function AddApi() {
     <>
       <div className='main-area'>
         <div className='left-side'>
+          <a href="/">Home</a>
+          <h2>Add New Api</h2>
           <form onChange={onChangeHandler} onSubmit={onSubmitHandler}>
             <input type="text" name="url" placeholder='URL' autoFocus />
             {urlError ? <span className='error'> The url has already been taken.</span> : null}
@@ -47,9 +49,6 @@ function AddApi() {
             <br />
             <input type="submit" value="Submit" />
           </form>
-        </div>
-        <div className='right-side'>
-          <pre>{url}</pre>
         </div>
       </div>
     </>

@@ -7,6 +7,7 @@ import { Route, RouterProvider, Routes } from 'react-router-dom'
 import ApiList from './ApiList'
 import ApiData from './ApiData'
 import AddApi from './AddApi'
+import EditApi from './EditApi'
 
 function App() {
 
@@ -16,6 +17,7 @@ function App() {
         <Route path='/' element={<ApiList />} />
         <Route path='/add' element={<AddApi />} />
         <Route path='/:url' element={<ApiData />} />
+        <Route path='/edit/:url' element={<EditApi />} />
       </Routes>
     </>
   )

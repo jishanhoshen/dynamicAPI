@@ -3,12 +3,12 @@ import React, { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom';
 
 export default function ApiData() {
-    const [apiList, setApiList] = useState('');
+    const [api, setApi] = useState('');
     const location = useLocation();
-    async function urlList() {
+    async function dataApi() {
         const res = await axios.get("https://api.ongsho.com/api/testapi" + location.pathname).then(function (res) {
             // console.log(res);
-            setApiList(res.data);
+            setApi(res.data);
             return res.data;
         })
             .catch(function (error) {
@@ -21,13 +21,23 @@ export default function ApiData() {
     }
 
     useEffect(() => {
-        urlList();
+        dataApi();
     }, []);
 
 
-    if (apiList != '') {
+    if (api != '') {
         return (
-            <code>{JSON.parse(apiList)}</code>
+            <>
+                <a href="/">Home 🏠</a>
+                <br />
+                <a href={"/edit" + location.pathname}>Edit ✏️</a>
+                <br />
+                <h2>{location.pathname.slice(1)}</h2>
+                <div className='right-side'>
+                    <pre><code>{api}</code></pre>
+                </div>
+
+            </>
         )
     }
 
