@@ -7,7 +7,7 @@ export default function ApiData() {
     const location = useLocation();
     async function dataApi() {
         const res = await axios.get("https://api.ongsho.com/api/testapi" + location.pathname).then(function (res) {
-            // console.log(res);
+            console.log(JSON.stringify(res.data));
             setApi(res.data);
             return res.data;
         })
