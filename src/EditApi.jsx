@@ -9,6 +9,7 @@ function EditApi() {
   const [urlError, setUrlError] = useState(false);
   const [json, setJson] = useState();
   const navigate = useNavigate();
+  const [fieldList, setFieldList] = useState(0);
 
   const onChangeHandler = (e) => {
     setJson(e.target.value)
@@ -39,9 +40,12 @@ function EditApi() {
 
   async function dataApi() {
     const res = await axios.get("https://api.ongsho.com/api/testapi" + location.pathname.slice(5)).then(function (res) {
-      // console.log(res);
-      setJson(res.data);
-      return res.data;
+      setFieldList(Object.keys(res.data).length);
+      console.log(res.data);
+      if (res.data) {
+        setJson(res.data)
+        return res.data;
+      }
     })
       .catch(function (error) {
 
@@ -49,8 +53,14 @@ function EditApi() {
   }
 
   useEffect(() => {
-    dataApi();
-  }, []);
+    dataApi()
+  }, [])
+
+
+
+  const onClickHandler = () => {
+    setFieldList(fieldList + 1);
+  };
 
   return (
     <>
@@ -60,20 +70,45 @@ function EditApi() {
           <br />
           <a href={location.pathname.slice(5)}>Back ⬅️</a>
           <h2>Update Api</h2>
+          <input type="text" placeholder='object name' value={location.pathname.slice(6)} name='object_name' onChange={e => setUrl(e.target.value)} />
+          <br />
+          <br />
+          <button onClick={onClickHandler}>Add new Field</button>
+          <br />
+          <br />
           <form onChange={onChangeHandler} onSubmit={onSubmitHandler}>
-            <input type="text" name="url" placeholder='URL' value={location.pathname.slice(6)} disabled />
-            {urlError ? <span className='error'> The url has already been taken.</span> : null}
+            {
+              json ?
+                Object.keys(json).map((key, index) => {
+                  return (
+                    <div key={index} >
+                      <input type="text" placeholder={index + ".0"} value={key} name="key" data-name='xyz'></input>{" => "}
+                      <input type="text" placeholder={index + ".1"} value={json[key]} name="value"></input>
+                      <br />
+                      <br />
+                    </div>)
+                })
+                : null
+            }
+            {/* {Array.from(Array(fieldList)).map((c, index) => {
+              return (
+                <div key={index} >
+                  <input type="text" placeholder={index + ".0"} name="key" data-name='xyz'></input>{" => "}
+                  <input type="text" placeholder={index + ".1"} name="value"></input>
+                  <br />
+                  <br />
+                </div>)
+            })} */}
+            <button onClick={() => setFieldList(fieldList - 1)} type='button'>remove</button>
             <br />
             <br />
-            <textarea name="json" placeholder='json' value={json} onChange={onChangeHandler} autoFocus></textarea>
-            <br />
-            <br />
-            <input type="submit" value="Submit" />
+            <button >Submit</button>
           </form>
         </div>
       </div>
     </>
   )
+
 }
 
 export default EditApi

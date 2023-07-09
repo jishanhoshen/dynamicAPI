@@ -7,9 +7,9 @@ export default function ApiData() {
     const location = useLocation();
     async function dataApi() {
         const res = await axios.get("https://api.ongsho.com/api/testapi" + location.pathname).then(function (res) {
-            console.log(JSON.stringify(res.data));
+            console.log(res.data);
             setApi(res.data);
-            return res.data;
+            // return res.data;
         })
             .catch(function (error) {
                 console.log(error);
@@ -34,7 +34,7 @@ export default function ApiData() {
                 <br />
                 <h2>{location.pathname.slice(1)}</h2>
                 <div className='right-side'>
-                    <pre><code>{api}</code></pre>
+                    <pre><code>{JSON.stringify(api)}</code></pre>
                 </div>
 
             </>

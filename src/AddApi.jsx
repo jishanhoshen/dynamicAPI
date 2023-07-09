@@ -12,36 +12,31 @@ function AddApi() {
   const [formValue, setFormValue] = useState();
   const navigate = useNavigate();
   const [fieldList, setFieldList] = useState(0);
-  const [json, setJson] = useState()
+
 
   const onChangeHandler = (e) => {
-    // setFormValue({ ...formValue, [e.target.name]: e.target.value })
     setFormValue({ ...formValue, [e.target.name]: e.target.value })
-    console.log(formValue);
-    const sizeOfForm = (array) => {
-      let size = 0
-      for (let key in array) {
-        if (array.hasOwnProperty(key)) {
-          size++
-        }
-      }
-      return size
-    }
-
-    console.log("size:" + sizeOfForm(formValue));
-    let Field = 0;
-
-    Object.keys(formValue).map(key => {
-
-      Field++
-    })
+    // console.log(formValue);
+    // const sizeOfForm = (array) => {
+    //   let size = 0
+    //   for (let key in array) {
+    //     if (array.hasOwnProperty(key)) {
+    //       size++
+    //     }
+    //   }
+    //   return size
+    // }
+    // console.log("size:" + sizeOfForm(formValue));
+    // let Field = 0;
+    // Object.keys(formValue).map(key => {
+    //   Field++
+    // })
   }
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
     let myKey = [];
     let myValue = [];
-    console.log(e.target.length);
     for (let i = 0; i < e.target.length; i++) {
       const element = e.target[i];
       if (element.getAttribute('name') == "key") {
@@ -52,27 +47,24 @@ function AddApi() {
         myValue.push(element.value);
       }
     }
-    console.log(myKey);
-    console.log(myValue);
-    let a = 0;
-    let data = [];
-    myKey.forEach((d) => {
-      {
-        myKey[a] : myValue[a]
-      }
 
-      data.push({ ${d} : myValue[a] });
+    let a = 0;
+    let data = {};
+    myKey.forEach((d) => {
+      data[d] = myValue[a]
       a++;
     })
+
     console.log(data);
+    addNewUrl(url, data)
   }
 
-  async function addNewUrl(data) {
-    console.log(data);
-    const res = await axios.post("https://api.ongsho.com/api/testapi", { "url": data.url, "json": data.json }).then(function (res) {
+  async function addNewUrl(url, data) {
+    // console.log({ "url": url, "json": data });
+    const res = await axios.post("https://api.ongsho.com/api/testapi", { "url": url, "json": data }).then(function (res) {
       // console.log(res);
       if (res.data.status) {
-        navigate(location.pathname.slice(5));
+        navigate('/'+url);
       }
     })
       .catch(function (error) {
@@ -115,7 +107,8 @@ function AddApi() {
             <br />
             <input type="submit" value="Submit" />
           </form> */}
-          <input type="text" placeholder='object name' onChange={e => setJson(e.target.value)} />
+          <input type="text" placeholder='object name' name='object_name' onChange={e => setUrl(e.target.value)} />
+          {urlError ? <span className='error'> The url has already been taken.</span> : null}
           <br />
           <br />
           <button onClick={onClickHandler}>Add new Field</button>
