@@ -39,9 +39,32 @@ function AddApi() {
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
-    for (const property in e.target) {
-      console.log(e.target.getAttribute('name'))
+    let myKey = [];
+    let myValue = [];
+    console.log(e.target.length);
+    for (let i = 0; i < e.target.length; i++) {
+      const element = e.target[i];
+      if (element.getAttribute('name') == "key") {
+        myKey.push(element.value);
+      }
+
+      if (element.getAttribute('name') == "value") {
+        myValue.push(element.value);
+      }
     }
+    console.log(myKey);
+    console.log(myValue);
+    let a = 0;
+    let data = [];
+    myKey.forEach((d) => {
+      {
+        myKey[a] : myValue[a]
+      }
+
+      data.push({ ${d} : myValue[a] });
+      a++;
+    })
+    console.log(data);
   }
 
   async function addNewUrl(data) {
@@ -102,8 +125,8 @@ function AddApi() {
             {Array.from(Array(fieldList)).map((c, index) => {
               return (
                 <div key={index} >
-                  <input type="text" placeholder={index + ".0"} name="key[]" data-name='xyz'></input>{" => "}
-                  <input type="text" placeholder={index + ".1"} name="value[]"></input>
+                  <input type="text" placeholder={index + ".0"} name="key" data-name='xyz'></input>{" => "}
+                  <input type="text" placeholder={index + ".1"} name="value"></input>
                   <br />
                   <br />
                 </div>)
