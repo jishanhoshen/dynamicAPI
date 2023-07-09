@@ -59,6 +59,8 @@ function EditApi() {
 
 
   const onClickHandler = () => {
+    let newjson = { "": "" }
+    setJson(newjson)
     setFieldList(fieldList + 1);
   };
 
@@ -80,6 +82,7 @@ function EditApi() {
             {
               json ?
                 Object.keys(json).map((key, index) => {
+                  console.log(key);
                   return (
                     <div key={index} >
                       <input type="text" placeholder={index + ".0"} value={key} name="key" data-name='xyz'></input>{" => "}
@@ -91,10 +94,11 @@ function EditApi() {
                 : null
             }
             {/* {Array.from(Array(fieldList)).map((c, index) => {
+              console.log(c);
               return (
                 <div key={index} >
                   <input type="text" placeholder={index + ".0"} name="key" data-name='xyz'></input>{" => "}
-                  <input type="text" placeholder={index + ".1"} name="value"></input>
+                  <input type="text" placeholder={index + ".1"} value={json[c]} name="value"></input>
                   <br />
                   <br />
                 </div>)
